@@ -1,4 +1,5 @@
-[![Crates.io](https://img.shields.io/crates/v/cargo-readme.svg)](https://crates.io/crates/server-starter-listener)
+[![Crates.io](https://img.shields.io/crates/v/server-starter-listener.svg)](https://crates.io/crates/server-starter-listener)
+[![server-starter-listener at docs.rs](https://docs.rs/server-starter-listener/badge.svg)](https://docs.rs/server-starter-listener)
 [![Build Status](https://travis-ci.org/krrrr38/server-starter-listener-rs.svg?branch=master)](https://travis-ci.org/krrrr38/server-starter-listener-rs)
 
 # server-starter-listener-rs
@@ -32,7 +33,7 @@ Now you can do hot-deploy by send `SIGHUP` to `start_server` process.
 `start_server` share file descriptor to new process and send `SIGTERM` to old process.
 
 
-Current version: 0.1.0
+Current version: [![Crates.io](https://img.shields.io/crates/v/server-starter-listener.svg)](https://crates.io/crates/server-starter-listener)
 
 Some additional info here
 
