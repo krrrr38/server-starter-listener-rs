@@ -2,8 +2,24 @@
 name = "server-starter-listener"
 version = "0.1.0"
 authors = ["krrrr38 <k.kaizu38@gmail.com>"]
+repository = "https://github.com/krrrr38/server-starter-listener-rs"
+description = "Server::Starter listener for hot deploy application"
 edition = "2018"
+documentation = "https://docs.rs/server-starter-listener"
+readme = "README.md"
+keywords = ["server", "deploy"]
+categories = ["web-programming"]
+license = "MIT OR Apache-2.0"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[badges]
+travis-ci = { repository = "krrrr38/server-starter-listener-rs" }
 
 [dependencies]
+regex = "1.3.1"
+failure = "0.1.6"
+lazy_static = "1.4.0"
+
+[dev-dependencies]
+actix-web = { version = "1.0.8", features = ["uds"] }
+env_logger = "0.7.1"
+log = "0.4.8"
