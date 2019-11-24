@@ -3,7 +3,10 @@ rust:
   - stable
   - beta
   - nightly
+before_script:
+  - rustup component add clippy
 script:
+  - cargo clippy -- -D warnings
   # test sequentially for environment tests
   - cargo build --all --verbose
   - cargo test --verbose -- --test-threads 1
