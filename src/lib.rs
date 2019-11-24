@@ -59,10 +59,8 @@ impl ServerStarterListener {
         ServerStarterListener::Tcp(unsafe { TcpListener::from_raw_fd(fd) })
     }
 
-    fn uds(fd: RawFd) -> std::io::Result<ServerStarterListener> {
-        Ok(ServerStarterListener::Uds(unsafe {
-            UnixListener::from_raw_fd(fd)
-        }))
+    fn uds(fd: RawFd) -> ServerStarterListener {
+        ServerStarterListener::Uds(unsafe { UnixListener::from_raw_fd(fd) })
     }
 }
 
@@ -75,8 +73,6 @@ pub enum ListenerError {
     ServerStarterPortEnvNotFound,
     #[fail(display = "cannot parse server starter port: {}", _0)]
     InvalidServerStarterPortSpec(String),
-    #[fail(display = "failed to bind uds: {}", _0)]
-    UnixListenerBindError(#[fail(cause)] std::io::Error),
 }
 
 ///
@@ -94,10 +90,10 @@ pub fn listeners() -> Result<Vec<ServerStarterListener>, ListenerError> {
         Err(_) => return Err(ListenerError::ServerStarterPortEnvNotFound),
     };
 
-    let specs: Vec<&str> = specs.split(";").collect();
+    let specs: Vec<&str> = specs.split(';').collect();
     let mut results = vec![];
     for spec in specs {
-        let pair: Vec<&str> = spec.split("=").collect();
+        let pair: Vec<&str> = spec.split('=').collect();
         if pair.len() != 2 {
             return Err(ListenerError::InvalidServerStarterPortSpec(spec.into()));
         }
@@ -108,17 +104,12 @@ pub fn listeners() -> Result<Vec<ServerStarterListener>, ListenerError> {
             Err(_) => return Err(ListenerError::InvalidServerStarterPortSpec(spec.into())),
         };
 
-        if let Some(_) = HOST_PORT_REGEX.find(left) {
-            results.push(ServerStarterListener::tcp(fd));
-        } else if let Some(_) = PORT_REGEX.find(left) {
-            results.push(ServerStarterListener::tcp(fd));
+        let listener = if HOST_PORT_REGEX.find(left).is_some() || PORT_REGEX.find(left).is_some() {
+            ServerStarterListener::tcp(fd)
         } else {
-            let uds_listener = match ServerStarterListener::uds(fd) {
-                Ok(uds_listener) => uds_listener,
-                Err(e) => return Err(ListenerError::UnixListenerBindError(e)),
-            };
-            results.push(uds_listener);
-        }
+            ServerStarterListener::uds(fd)
+        };
+        results.push(listener)
     }
     Ok(results)
 }
