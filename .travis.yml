@@ -10,12 +10,6 @@ script:
   # test sequentially for environment tests
   - cargo build --all --verbose
   - cargo test --verbose -- --test-threads 1
-deploy:
-  provider: cargo
-  token: # $ travis encrypt CRATES_IO_TOKEN --add deploy.token
-    secure: ueo7QOES+VOfdJJ2I0vVkZA+8mQins5h62RsAmd/D3CaSfhbjWrmqk/BIpOxW92Kv3WT+Z4PEppUHPyrSC5hRQuZlanhkK4aTmiD9y1GmdcAH7nnKmyCi6Yi22eVwFv63KZx0Ixw0nK6bGgG/W/wnC87DrW8A03ZAF5WshYSCqx/CWn073u/+wTzO/iqxcMPshLX5+iZFjuKmKkVilMc5wIlihXNzAYjz3DxSjmwqyNcKvqg6bN3vdvoI6nOl2mLGkecfdEiUDETaiwO9mi4KFjamK7l7K+bOPqd2YM2ODQaiHAaQZ6/VOS/j1xaK+t/nQl+6cUZK2SCD8q0/IOXXj82TJvBjWcq7aliCJnNP4RkJ+OFOO2jF33JaV1yY7mvmbxwexeiOfrg2MuzFg9Ca1XcwAS4ldobyArgoO7+WFyb+3Gw59o980/efGUOHfMpPBEtb29g6S9x/sKpjXANlyrE2lf3TCEky35t8x987T+TeIfGt4wXgRn0U4zc10QaK9JN4URCXCmBbuFbVx7YfGX1YMmjNxLsQyoXDdMkS1oHTSqgeTp6jgxjjGlBKRpBzpk///lmAtmkdyalYBcJq/XtbYoS7uhG82Gccbp+1Zk14OvvX6Xb01hnzXYmSl83KQZs3KfzY2KiZjk6ndRtsRokvF/2PEkvKg+JQjE185U=
-  on:
-    branch: master
 jobs:
   allow_failures:
     - rust: nightly
